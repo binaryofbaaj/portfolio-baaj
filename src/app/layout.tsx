@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
@@ -23,6 +23,15 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  themeColor: "#050816",
+  viewportFit: "cover",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -32,10 +41,9 @@ export default function RootLayout({
     <html lang="en" className="antialiased" suppressHydrationWarning>
       <body className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)]">
         <ThemeProvider attribute="data-theme" defaultTheme="dark" enableSystem={false}>
-        {children}
-        {/* CRT Scanlines overlay */}
-        <div className="crt-overlay" aria-hidden="true" />
-      
+          {children}
+          {/* CRT Scanlines overlay */}
+          <div className="crt-overlay" aria-hidden="true" />
         </ThemeProvider>
       </body>
     </html>

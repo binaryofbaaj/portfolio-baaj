@@ -44,7 +44,7 @@ function Particles({ count = 500 }: { count?: number }) {
         <primitive object={bufferAttr} attach="attributes-position" />
       </bufferGeometry>
       <pointsMaterial
-        color="var(--accent-green)"
+        color="#00ff41"
         size={0.05}
         transparent
         opacity={0.6}
@@ -79,7 +79,7 @@ function FloatingGeo() {
   return (
     <mesh ref={meshRef}>
       <icosahedronGeometry args={[2, 1]} />
-      <meshBasicMaterial color="var(--accent-green)" wireframe transparent opacity={0.15} />
+      <meshBasicMaterial color="#00ff41" wireframe transparent opacity={0.15} />
     </mesh>
   );
 }

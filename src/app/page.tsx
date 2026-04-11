@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import SkillsSection from "@/components/SkillsSection";
@@ -12,8 +13,10 @@ import MusicSection from "@/components/MusicSection";
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
 import Terminal from "@/components/Terminal";
-import ParticleBackground from "@/components/ParticleBackground";
-import KonamiEasterEgg from "@/components/KonamiEasterEgg";
+
+// Dynamic imports with ssr: false to prevent hydration errors and SSR bailouts
+const ParticleBackground = dynamic(() => import("@/components/ParticleBackground"), { ssr: false });
+const KonamiEasterEgg = dynamic(() => import("@/components/KonamiEasterEgg"), { ssr: false });
 
 export default function Home() {
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
