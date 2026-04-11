@@ -69,7 +69,8 @@ export default function Terminal({
     if (trimmed === "theme" || trimmed === "theme toggle") {
       const newTheme = theme === "dark" ? "light" : "dark";
       setTheme(newTheme);
-      newHistory.push({ type: "output", content: `Theme toggled to ${newTheme} mode.\n⚠️ WARNING: Not getting the full immersive experience in this theme!!` });
+      const warning = newTheme === 'light' ? '\n⚠️ WARNING: Not getting the full immersive experience in this theme!!' : '';
+      newHistory.push({ type: "output", content: `Theme toggled to ${newTheme} mode.${warning}` });
       setHistory(newHistory);
       setCmdHistory([cmd, ...cmdHistory]);
       setHistoryIndex(-1);
@@ -79,7 +80,8 @@ export default function Terminal({
       const mode = trimmed.split(" ")[1];
       if (mode === "light" || mode === "dark") {
         setTheme(mode);
-        newHistory.push({ type: "output", content: `Theme switched to ${mode} mode.\n⚠️ WARNING: Not getting the full immersive experience in this theme!!` });
+        const warning = mode === 'light' ? '\n⚠️ WARNING: Not getting the full immersive experience in this theme!!' : '';
+        newHistory.push({ type: "output", content: `Theme switched to ${mode} mode.${warning}` });
       } else {
         newHistory.push({ type: "output", content: `Unknown theme. Usage: theme [light|dark|toggle]` });
       }
