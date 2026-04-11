@@ -130,7 +130,7 @@ export default function MusicSection() {
   const currentTrack = tracks[currentTrackIndex];
 
   return (
-    <section id="music" className="relative py-24 px-4 min-h-screen flex items-center justify-center">
+    <section id="music" className="relative pt-24 pb-32 sm:py-24 px-4 min-h-screen flex items-center justify-center">
       <div className="max-w-4xl w-full mx-auto">
         {/* Section Header */}
         <motion.div

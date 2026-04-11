@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -58,12 +58,23 @@ function Particles({ count = 500 }: { count?: number }) {
 
 function FloatingGeo() {
   const meshRef = useRef<THREE.Mesh>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   useFrame((state) => {
-    if (!meshRef.current) return;
+    if (!meshRef.current || isMobile) return;
     meshRef.current.rotation.x = state.clock.elapsedTime * 0.15;
     meshRef.current.rotation.y = state.clock.elapsedTime * 0.2;
     meshRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.5;
   });
+
+  if (isMobile) return null;
 
   return (
     <mesh ref={meshRef}>
@@ -74,6 +85,15 @@ function FloatingGeo() {
 }
 
 export default function ParticleBackground() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
     <div className="fixed inset-0 z-0" style={{ pointerEvents: "none" }}>
       <Canvas
@@ -82,7 +102,7 @@ export default function ParticleBackground() {
         dpr={[1, 1.5]}
         style={{ background: "transparent" }}
       >
-        <Particles count={400} />
+        <Particles count={isMobile ? 150 : 400} />
         <FloatingGeo />
       </Canvas>
     </div>

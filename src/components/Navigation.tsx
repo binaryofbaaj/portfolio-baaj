@@ -154,7 +154,7 @@ export default function Navigation({
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-[var(--bg-base)]/95 backdrop-blur-xl md:hidden flex flex-col items-center justify-center gap-6"
+            className="fixed inset-0 z-60 bg-[var(--bg-base)]/95 backdrop-blur-xl md:hidden flex flex-col items-center justify-center gap-6"
           >
             {navLinks.map((link, i) => (
               <motion.button
@@ -163,7 +163,7 @@ export default function Navigation({
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.1 }}
                 onClick={() => handleClick(link.href)}
-                className="text-2xl text-[var(--text-secondary)] hover:text-[var(--accent-green)] transition-colors font-mono"
+                className="text-2xl text-[var(--text-secondary)] hover:text-[var(--accent-green)] transition-colors font-mono py-2 w-full text-center"
               >
                 <span className="text-[var(--accent-green)]">$ </span>cd {link.label}
               </motion.button>

@@ -122,7 +122,7 @@ export default function HeroSection() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-sm sm:text-base text-[var(--text-tertiary)] max-w-2xl lg:mx-0 mx-auto mb-10 leading-relaxed"
+              className="text-sm sm:text-base text-[var(--text-tertiary)] max-w-2xl lg:mx-0 mx-auto mb-6 sm:mb-10 leading-relaxed"
             >
               {personalInfo.description}
             </motion.p>
@@ -169,7 +169,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, scale: 1 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 1 }}
-          className="flex justify-center items-center h-[500px] sm:h-[600px] w-full"
+          className="flex justify-center items-center h-[300px] sm:h-[500px] lg:h-[600px] w-full mt-4 lg:mt-0"
         >
           {/* Globe Interaction Hint */}
           <motion.div
