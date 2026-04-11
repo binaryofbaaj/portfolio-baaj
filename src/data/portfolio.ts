@@ -177,22 +177,26 @@ export const achievements: Achievement[] = [
 
 
 export const defaultTracks: Track[] = [
-
-
   {
     id: "1",
+    title: "Every Breath You Take",
+    artist: "The Police",
+    url: "https://pagallworlds.com/wp-content/uploads/2023/11/Every-Breath-You-Take.mp3",
+  },
+  {
+    id: "2",
     title: "Synthwave Dreams",
     artist: "Cyberman",
     url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
   },
   {
-    id: "2",
+    id: "3",
     title: "Neon Nights",
     artist: "HackerOne",
     url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
   },
   {
-    id: "3",
+    id: "4",
     title: "Digital Horizon",
     artist: "GridRunner",
     url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
@@ -252,9 +256,10 @@ Type 'projects <number>' for details.`,
                               Packages: 420
                               Memory: ∞ motivation`,
   music: `🎶 Music Commands:
-[1] Synthwave Dreams - Cyberman
-[2] Neon Nights      - HackerOne
-[3] Digital Horizon  - GridRunner
+[1] Every Breath You Take - The Police
+[2] Synthwave Dreams      - Cyberman
+[3] Neon Nights           - HackerOne
+[4] Digital Horizon       - GridRunner
 
 Scroll to ~/music section to play and add tracks!`,
   "sudo rm -rf /": `Nice try, hacker! 🚫

@@ -33,12 +33,18 @@ export default function MusicSection() {
     // EXCLUSIVE TRIGGER: Only start music via Globe Interaction
     const attemptAutoplay = () => {
       if (audioRef.current) {
-        if (!audioRef.current.src && initialTracks.length > 0) {
-           audioRef.current.src = initialTracks[0].url;
+        // Force the Police track to be the starting song
+        const policeTrack = initialTracks.find(t => t.title.includes("Every Breath You Take"));
+        const targetTrack = policeTrack || initialTracks[0];
+
+        if (targetTrack) {
+          audioRef.current.src = targetTrack.url;
+          setCurrentTrackIndex(initialTracks.indexOf(targetTrack));
         }
         
         audioRef.current.play().then(() => {
           setIsPlaying(true);
+          // We still remove the listener after first success to avoid music restarting on every touch
           window.removeEventListener("portfolio:start-music", attemptAutoplay);
         }).catch((err) => {
           console.warn("Audio activation failed:", err);
