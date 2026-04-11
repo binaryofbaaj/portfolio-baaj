@@ -4,6 +4,15 @@ import createGlobe from "cobe";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 
+
+interface GlobeState {
+  phi: number;
+  theta: number;
+  width: number;
+  height: number;
+  [key: string]: any;
+}
+
 export default function Globe() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { theme, resolvedTheme } = useTheme();
@@ -29,7 +38,7 @@ export default function Globe() {
 
     if (!canvasRef.current || !mounted) return;
 
-    const globe = createGlobe(canvasRef.current, {
+    const globeConfig: any = {
       devicePixelRatio: 2,
       width: width * 2,
       height: width * 2,
@@ -45,13 +54,15 @@ export default function Globe() {
       markers: [
         { location: [28.6139, 77.2090], size: 0.1 }, // New Delhi
       ],
-      onRender: (state) => {
+      onRender: (state: GlobeState) => {
         state.phi = phi;
         phi += 0.005;
         state.width = width * 2;
         state.height = width * 2;
       },
-    });
+    };
+
+    const globe = createGlobe(canvasRef.current, globeConfig);
 
     setTimeout(() => {
       if (canvasRef.current) canvasRef.current.style.opacity = '1';

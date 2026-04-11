@@ -7,7 +7,7 @@ import { Points, PointMaterial } from "@react-three/drei";
 import * as random from "maath/random/dist/maath-random.esm";
 
 const Stars = (props: any) => {
-  const ref = useRef<any>();
+  const ref = useRef<any>(null);
   // Fix: Array size must be a multiple of 3 for 3D coordinates (x, y, z)
   // 5001 is 1667 points exactly.
   const [sphere] = useState(() => random.inSphere(new Float32Array(5001), { radius: 1.2 }));
