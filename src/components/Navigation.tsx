@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { FiSun, FiMoon } from "react-icons/fi";
+import { FiSun, FiMoon, FiPlay, FiPause } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
@@ -25,7 +25,21 @@ export default function Navigation({
   const [activeSection, setActiveSection] = useState("#hero");
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTrack, setCurrentTrack] = useState("");
+
+  useEffect(() => {
+    setMounted(true);
+    const handleStatus = (e: any) => setIsPlaying(e.detail.isPlaying);
+    const handleTrack = (e: any) => setCurrentTrack(e.detail.title);
+    
+    window.addEventListener("portfolio:music-status", handleStatus);
+    window.addEventListener("portfolio:music-track", handleTrack);
+    return () => {
+      window.removeEventListener("portfolio:music-status", handleStatus);
+      window.removeEventListener("portfolio:music-track", handleTrack);
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,6 +61,10 @@ export default function Navigation({
     setIsOpen(false);
     const el = document.querySelector(href);
     el?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const toggleMusic = () => {
+    window.dispatchEvent(new CustomEvent("portfolio:toggle-music"));
   };
 
   return (
@@ -92,23 +110,48 @@ export default function Navigation({
                   {link.label}
                 </motion.button>
               ))}
+              
               {mounted && (
-                <div className="group relative">
+                <div className="flex items-center ml-2">
+                  {/* Music Toggle */}
                   <motion.button
-                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                    className="ml-2 p-2 rounded-md text-[var(--text-secondary)] hover:text-[var(--accent-green)] transition-all flex items-center"
+                    onClick={toggleMusic}
+                    className="p-2 rounded-md text-[var(--accent-cyan)] hover:bg-[var(--accent-cyan)]/10 transition-all flex items-center relative group/music"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                    aria-label="Toggle theme"
+                    aria-label="Toggle music"
                   >
-                    {theme === "dark" ? <FiSun size={18} /> : <FiMoon size={18} />}
+                    {isPlaying ? <FiPause size={18} /> : <FiPlay size={18} />}
+                    {isPlaying && (
+                      <span className="absolute -top-1 -right-1 flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--accent-cyan)] opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--accent-cyan)]"></span>
+                      </span>
+                    )}
+                    {/* Track Tooltip */}
+                    <div className="absolute top-full right-0 mt-2 whitespace-nowrap px-2 py-1 bg-black/90 text-[var(--accent-cyan)] text-[10px] font-mono rounded opacity-0 group-hover/music:opacity-100 transition-opacity pointer-events-none border border-[var(--accent-cyan)]/30 backdrop-blur-sm z-50">
+                      {isPlaying ? `NOW_PLAYING: ${currentTrack}` : "MUSIC_PAUSED"}
+                    </div>
                   </motion.button>
-                  {/* Warning Tooltip */}
-                  <div className="absolute top-full right-0 mt-2 w-48 p-2 bg-red-900/90 text-white text-[10px] font-mono rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-red-500 shadow-xl">
-                    ⚠️ WARNING: Swiching themes may break the full immersive experience!!
+
+                  <div className="group relative ml-1">
+                    <motion.button
+                      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                      className="p-2 rounded-md text-[var(--text-secondary)] hover:text-[var(--accent-green)] transition-all flex items-center"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      aria-label="Toggle theme"
+                    >
+                      {theme === "dark" ? <FiSun size={18} /> : <FiMoon size={18} />}
+                    </motion.button>
+                    {/* Warning Tooltip */}
+                    <div className="absolute top-full right-0 mt-2 w-48 p-2 bg-red-900/90 text-white text-[10px] font-mono rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-red-500 shadow-xl">
+                      ⚠️ WARNING: Swiching themes may break the full immersive experience!!
+                    </div>
                   </div>
                 </div>
               )}
+
               <motion.button
                 onClick={onTerminalToggle}
                 className="ml-3 px-3 py-2 text-sm rounded-md border border-[var(--accent-green)]/30 text-[var(--accent-green)] hover:bg-[var(--accent-green)]/10 transition-all"
@@ -156,6 +199,19 @@ export default function Navigation({
             exit={{ opacity: 0, y: -20 }}
             className="fixed inset-0 z-60 bg-[var(--bg-base)]/95 backdrop-blur-xl md:hidden flex flex-col items-center justify-center gap-6"
           >
+            {/* Global Music Toggle (Mobile) */}
+            <motion.button
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              onClick={toggleMusic}
+              className="flex items-center gap-4 px-6 py-3 rounded-full border border-[var(--accent-cyan)]/30 bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)] mb-4"
+            >
+               {isPlaying ? <FiPause size={24} /> : <FiPlay size={24} />}
+               <span className="font-mono text-sm tracking-wider uppercase">
+                 {isPlaying ? "Pause Music" : "Play Music"}
+               </span>
+            </motion.button>
+
             {navLinks.map((link, i) => (
               <motion.button
                 key={link.href}

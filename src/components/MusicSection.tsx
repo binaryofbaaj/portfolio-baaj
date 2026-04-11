@@ -13,6 +13,23 @@ export default function MusicSection() {
   const [progress, setProgress] = useState(0);
   const [showAddModal, setShowAddModal] = useState(false);
   const [newTrack, setNewTrack] = useState({ title: "", artist: "", url: "" });
+
+  // Global Sync Hooks
+  useEffect(() => {
+    const handleGlobalToggle = () => setIsPlaying(prev => !prev);
+    window.addEventListener("portfolio:toggle-music", handleGlobalToggle);
+    return () => window.removeEventListener("portfolio:toggle-music", handleGlobalToggle);
+  }, []);
+
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent("portfolio:music-status", { detail: { isPlaying } }));
+  }, [isPlaying]);
+
+  useEffect(() => {
+    if (tracks[currentTrackIndex]) {
+      window.dispatchEvent(new CustomEvent("portfolio:music-track", { detail: { title: tracks[currentTrackIndex].title } }));
+    }
+  }, [currentTrackIndex, tracks]);
   
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
