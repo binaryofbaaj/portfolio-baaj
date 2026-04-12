@@ -34,6 +34,15 @@ export interface Experience {
   color: string;
 }
 
+export interface Education {
+  school: string;
+  degree: string;
+  period: string;
+  cgpa?: string;
+  status?: string;
+  color: string;
+}
+
 export interface Achievement {
   title: string;
   description: string;
@@ -43,15 +52,15 @@ export interface Achievement {
 export const personalInfo = {
   name: "Gurman Singh",
   fullName: "Gurman Singh Budhiraja",
-  title: "Full Stack Developer | AI Enthusiast",
+  title: "AI/ML Engineer | Full Stack Developer",
   email: "gurmansingh9837@gmail.com",
   degree: "B.Tech CSE",
   cgpa: "8.32",
   university: "Graphic Era University",
   description:
-    "Passionate developer with a focus on full-stack and AI-based applications. Strong problem-solving mindset with experience building scalable, real-time systems. I love turning complex ideas into elegant, user-friendly software.",
+    "I am a B.Tech Computer Science graduate from Graphic Era Deemed to be University (Class of 2025) with a CGPA of 8.32. I will be joining UPES Dehradun in July 2026 for further studies. I am an aspiring AI/ML Engineer focused on building intelligent, data-driven systems and solving real-world problems. I have a strong foundation in full-stack development, which I leverage to create scalable and practical applications. Alongside this, I have a growing interest in cybersecurity, particularly in understanding system vulnerabilities, security fundamentals, and how modern systems can be made more resilient. I focus on building real-world projects with clean architecture, performance optimization, and strong user experience.",
   social: {
-    github: "https://github.com/binaryofbaaj",
+    github: "https://github.com/binaryofbaaj/graph-algorithm-visualizer",
     linkedin: "https://www.linkedin.com/in/gurman-singh-2032b0244/",
   },
 };
@@ -100,48 +109,62 @@ export const projects: Project[] = [
   {
     title: "Standard Electricals",
     description:
-      "Professional generator rental and enquiry management platform built for Standard Electricals. Features a fleet catalog, smart calculator, and automated EmailJS booking notifications.",
-    tech: ["Next.js 14", "Tailwind CSS", "TypeScript", "Prisma", "PostgreSQL", "EmailJS"],
+      "A full-stack generator rental and enquiry management platform built to streamline booking workflows and fleet management.",
+    tech: ["Next.js 14", "TypeScript", "Tailwind CSS", "Prisma", "PostgreSQL", "EmailJS"],
     features: [
-      "Fleet Catalog with KVA ratings & daily pricing",
-      "Smart Calculator for dynamic rental costs",
-      "Automated Database Enquiries via Prisma",
-      "Instant Email Alerts targeting owners via EmailJS",
+      "Fleet catalog with KVA ratings and pricing",
+      "Dynamic rental cost calculator",
+      "Prisma + PostgreSQL for data handling",
+      "EmailJS integration for instant enquiry notifications",
     ],
     github: "https://github.com/binaryofbaaj",
-    live: "https://ms-generators-2m86.vercel.app",
+    live: "https://ms-generators-2m86.vercel.app/",
     color: "var(--accent-green)",
   },
   {
-    title: "Chit-Chat",
+    title: "Retro 3D Portfolio",
     description:
-      "Real-time chat application with a rich feature set including group chats, file sharing, and emoji support — built for seamless communication.",
-    tech: ["MongoDB", "Express.js", "React", "Node.js", "Socket.IO"],
+      "An interactive 3D portfolio featuring a cinematic globe, terminal-based navigation, and a gamified spin-to-play audio system.",
+    tech: ["Next.js 15", "Three.js (R3F)", "Framer Motion", "Tailwind CSS", "EmailJS"],
     features: [
-      "JWT authentication & authorization",
-      "Real-time group chat with Socket.IO",
-      "File sharing capabilities",
-      "Emoji support & rich messaging",
+      "Built using Three.js with real-time rendering",
+      "Custom terminal interface with command system",
+      "Dual-theme UI with micro-interactions",
     ],
-    github: "https://github.com/binaryofbaaj",
-    live: "#",
+    github: "https://github.com/binaryofbaaj/portfolio-baaj",
+    live: "https://baaj-portfolio.netlify.app/",
     color: "var(--accent-cyan)",
   },
   {
-    title: "AlgoVisualizer",
+    title: "Graph Algorithm Visualizer",
     description:
-      "Interactive sorting algorithm visualizer that brings algorithms to life with step-by-step animations, helping learners understand how sorting works.",
+      "An interactive visualization tool for understanding graph algorithms through real-time animations.",
     tech: ["HTML", "CSS", "JavaScript"],
     features: [
-      "Bubble Sort visualization",
-      "Selection Sort visualization",
-      "Quick Sort visualization",
-      "Merge Sort visualization",
-      "Step-by-step animation controls",
+      "Step-by-step algorithm visualization",
+      "Interactive user inputs",
+      "Optimized rendering performance",
     ],
-    github: "https://github.com/binaryofbaaj",
+    github: "https://github.com/binaryofbaaj/graph-algorithm-visualizer",
     live: "https://binaryofbaaj.github.io/graph-algorithm-visualizer/",
     color: "var(--accent-purple)",
+  },
+];
+
+export const education: Education[] = [
+  {
+    school: "Graphic Era Deemed to be University",
+    degree: "B.Tech in Computer Science",
+    period: "2021 – 2025",
+    cgpa: "8.32",
+    color: "var(--accent-green)",
+  },
+  {
+    school: "UPES Dehradun",
+    degree: "M.Tech",
+    status: "Upcoming",
+    period: "Starting: July 2026",
+    color: "var(--accent-cyan)",
   },
 ];
 
@@ -179,24 +202,30 @@ export const achievements: Achievement[] = [
 export const defaultTracks: Track[] = [
   {
     id: "1",
+    title: "Praise God",
+    artist: "Kanye West",
+    url: "https://files.cvaultx.com/wp-content/uploads/music/2021/09/Kanye_West_-_Praise_God_CeeNaija.com_.mp3",
+  },
+  {
+    id: "2",
     title: "Every Breath You Take",
     artist: "The Police",
     url: "https://pagallworlds.com/wp-content/uploads/2023/11/Every-Breath-You-Take.mp3",
   },
   {
-    id: "2",
+    id: "3",
     title: "Synthwave Dreams",
     artist: "Cyberman",
     url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
   },
   {
-    id: "3",
+    id: "4",
     title: "Neon Nights",
     artist: "HackerOne",
     url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
   },
   {
-    id: "4",
+    id: "5",
     title: "Digital Horizon",
     artist: "GridRunner",
     url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
@@ -218,13 +247,13 @@ export const terminalCommands: Record<string, string> = {
   about: `┌──────────────────────────────────────┐
 │  GURMAN SINGH BUDHIRAJA             │
 │  ──────────────────────────────────  │
-│  Role:  Full Stack Developer        │
+│  Role:  AI/ML Engineer & Dev        │
 │  Degree: B.Tech CSE (8.32 CGPA)    │
-│  Univ:  Graphic Era University      │
+│  Univ:  Graphic Era & UPES          │
 │                                     │
-│  Passionate developer focused on    │
-│  full-stack + AI applications.      │
-│  Strong problem-solving mindset.    │
+│  Focused on AI/ML systems and        │
+│  full-stack web applications.      │
+│  Cybersecurity aspirant.            │
 └──────────────────────────────────────┘`,
   skills: `> Languages:    Python, Java
 > Web:          HTML, CSS, TailwindCSS, React,
@@ -232,8 +261,8 @@ export const terminalCommands: Record<string, string> = {
 > Tools:        GitHub, Docker, VS Code, FastAPI
 > Databases:    MySQL`,
   projects: `[1] Standard Electricals - Generator Rental System
-[2] Chit-Chat      - Real-time Chat Application
-[3] AlgoVisualizer - Sorting Algorithm Visualizer
+[2] Retro 3D Portfolio   - Interactive Workspace
+[3] AlgoVisualizer       - Graph Visualizer
 
 Type 'projects <number>' for details.`,
   experience: `┌─ AWS Cloud Computing Intern (2024) ─┐
@@ -256,10 +285,11 @@ Type 'projects <number>' for details.`,
                               Packages: 420
                               Memory: ∞ motivation`,
   music: `🎶 Music Commands:
-[1] Every Breath You Take - The Police
-[2] Synthwave Dreams      - Cyberman
-[3] Neon Nights           - HackerOne
-[4] Digital Horizon       - GridRunner
+[1] Praise God             - Kanye West
+[2] Every Breath You Take  - The Police
+[3] Synthwave Dreams       - Cyberman
+[4] Neon Nights            - HackerOne
+[5] Digital Horizon        - GridRunner
 
 Scroll to ~/music section to play and add tracks!`,
   "sudo rm -rf /": `Nice try, hacker! 🚫

@@ -144,9 +144,9 @@ export default function Navigation({
                     >
                       {theme === "dark" ? <FiSun size={18} /> : <FiMoon size={18} />}
                     </motion.button>
-                    {/* Warning Tooltip */}
-                    <div className="absolute top-full right-0 mt-2 w-48 p-2 bg-red-900/90 text-white text-[10px] font-mono rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-red-500 shadow-xl">
-                      ⚠️ WARNING: Swiching themes may break the full immersive experience!!
+                    {/* Theme Tooltip */}
+                    <div className="absolute top-full right-0 mt-2 w-48 p-2 bg-[var(--bg-surface)] text-[var(--text-primary)] text-[10px] font-mono rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-[var(--border-base)] shadow-xl">
+                      {theme === "dark" ? "Switch to Vintage Mode" : "Switch to Cyber Mode"}
                     </div>
                   </div>
                 </div>
@@ -247,7 +247,7 @@ export default function Navigation({
                 >
                   {theme === "dark" ? <><FiSun /> light_mode</> : <><FiMoon /> dark_mode</>}
                 </motion.button>
-                <span className="text-[10px] text-red-500 mt-1">⚠️ Warning: Not full experience</span>
+                <span className="text-[10px] text-[var(--text-tertiary)] mt-1">{theme === "dark" ? "Try Vintage Mode" : "Try Cyber Mode"}</span>
               </div>
             )}
           </motion.div>

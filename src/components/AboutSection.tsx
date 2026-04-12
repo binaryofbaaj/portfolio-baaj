@@ -15,13 +15,15 @@ export default function AboutSection() {
     { label: "University", value: "Graphic Era", color: "var(--accent-purple)" },
   ];
 
-  const lines = [
-    { prefix: "name", value: `"${personalInfo.fullName}"`, delay: 0.1 },
-    { prefix: "role", value: `"Full Stack Developer"`, delay: 0.2 },
-    { prefix: "education", value: `"${personalInfo.degree} @ ${personalInfo.university}"`, delay: 0.3 },
-    { prefix: "cgpa", value: personalInfo.cgpa, delay: 0.4 },
-    { prefix: "focus", value: `["Full-Stack", "AI Applications"]`, delay: 0.5 },
-    { prefix: "passion", value: `"Building elegant software"`, delay: 0.6 },
+        const lines = [
+    { prefix: "name", value: `"${personalInfo.fullName}"`, delay: 0.05 },
+    { prefix: "email", value: `"${personalInfo.email}"`, delay: 0.1 },
+    { prefix: "role", value: `"AI/ML Engineer & Full Stack Architect"`, delay: 0.15 },
+    { prefix: "education", value: `"B.Tech CSE @ Graphic Era (8.32 CGPA, 2025)"`, delay: 0.2 },
+    { prefix: "upcoming", value: `"M.Tech @ UPES Dehradun (2026)"`, delay: 0.25 },
+    { prefix: "expertise", value: `["AI Research", "Scalable Web Engines", "Cyber-Resilience"]`, delay: 0.3 },
+    { prefix: "design_mantra", value: `"Clean Architecture & Performance Optimization"`, delay: 0.35 },
+    { prefix: "mission", value: `"Building intelligent, data-driven systems for real-world impact"`, delay: 0.4 },
   ];
 
   return (
@@ -112,17 +114,6 @@ export default function AboutSection() {
               </motion.div>
             ))}
 
-            {/* Description */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.4, delay: 0.9 }}
-              className="p-5 rounded-lg border border-[var(--border-base)] bg-[var(--bg-surface)]/50"
-            >
-              <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-                {personalInfo.description}
-              </p>
-            </motion.div>
           </motion.div>
         </div>
       </div>

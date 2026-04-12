@@ -15,6 +15,8 @@ export default function ContactSection() {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
@@ -27,15 +29,49 @@ export default function ContactSection() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      setSubmitted(true);
-      // In production, this would send to an API
-      setTimeout(() => {
-        setFormData({ name: "", email: "", message: "" });
-        setSubmitted(false);
-      }, 3000);
+      setIsSending(true);
+      setErrorMessage("");
+      
+      try {
+        const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            service_id: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+            template_id: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+            user_id: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
+            template_params: {
+              name: formData.name,
+              from_name: formData.name,
+              email: formData.email,
+              from_email: formData.email,
+              message: formData.message,
+              title: "New Portfolio Message",
+              to_name: personalInfo.name,
+            },
+          }),
+        });
+
+        if (response.ok) {
+          setSubmitted(true);
+          setFormData({ name: "", email: "", message: "" });
+          setTimeout(() => setSubmitted(false), 5000);
+        } else {
+          const errorData = await response.text();
+          console.error("EmailJS Error:", errorData);
+          setErrorMessage("Failed to send message. Please check your configuration.");
+        }
+      } catch (err) {
+        console.error("Fetch Error:", err);
+        setErrorMessage("Network error. Please try again later.");
+      } finally {
+        setIsSending(false);
+      }
     }
   };
 
@@ -249,16 +285,36 @@ export default function ContactSection() {
                       )}
                     </div>
 
+                    {errorMessage && (
+                      <div className="p-3 bg-red-900/20 border border-red-500/50 rounded text-red-400 text-xs font-mono mb-4">
+                        ⚠ ERROR: {errorMessage}
+                      </div>
+                    )}
+
                     <motion.button
                       type="submit"
-                      className="w-full py-3 bg-[var(--accent-green)] text-[var(--bg-base)] rounded-md font-mono font-bold text-sm flex items-center justify-center gap-2 hover:bg-[var(--accent-cyan)] transition-colors"
-                      whileHover={{
+                      disabled={isSending}
+                      className={`w-full py-3 rounded-md font-mono font-bold text-sm flex items-center justify-center gap-2 transition-all ${
+                        isSending 
+                          ? "bg-[var(--text-quaternary)] text-[var(--text-tertiary)] cursor-not-allowed" 
+                          : "bg-[var(--accent-green)] text-[var(--bg-base)] hover:bg-[var(--accent-cyan)]"
+                      }`}
+                      whileHover={!isSending ? {
                         scale: 1.02,
                         boxShadow: "0 0 25px rgba(0,255,65,0.3)",
-                      }}
-                      whileTap={{ scale: 0.98 }}
+                      } : {}}
+                      whileTap={!isSending ? { scale: 0.98 } : {}}
                     >
-                      <FiSend size={16} />$ send_message
+                      {isSending ? (
+                        <span className="flex items-center gap-2">
+                          <span className="animate-spin inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full" />
+                          $ executing_transmit...
+                        </span>
+                      ) : (
+                        <>
+                          <FiSend size={16} />$ send_message
+                        </>
+                      )}
                     </motion.button>
                   </form>
                 )}

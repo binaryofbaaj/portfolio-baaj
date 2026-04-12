@@ -17,9 +17,31 @@ export default function MusicSection() {
   // Global Sync Hooks
   useEffect(() => {
     const handleGlobalToggle = () => setIsPlaying(prev => !prev);
+    const handleCommand = (e: Event) => {
+      const cmd = (e as CustomEvent).detail?.command;
+      if (cmd === "play") setIsPlaying(true);
+      if (cmd === "pause") setIsPlaying(false);
+      if (cmd === "next") setCurrentTrackIndex((prev) => (prev + 1) % tracks.length);
+      if (cmd === "prev") setCurrentTrackIndex((prev) => (prev - 1 + tracks.length) % tracks.length);
+    };
+    const handlePlayIndex = (e: Event) => {
+      const idx = (e as CustomEvent).detail?.index;
+      if (typeof idx === "number" && idx >= 0 && idx < tracks.length) {
+        setCurrentTrackIndex(idx);
+        setIsPlaying(true);
+      }
+    };
+
     window.addEventListener("portfolio:toggle-music", handleGlobalToggle);
-    return () => window.removeEventListener("portfolio:toggle-music", handleGlobalToggle);
-  }, []);
+    window.addEventListener("portfolio:music-command", handleCommand);
+    window.addEventListener("portfolio:music-play-index", handlePlayIndex);
+
+    return () => {
+      window.removeEventListener("portfolio:toggle-music", handleGlobalToggle);
+      window.removeEventListener("portfolio:music-command", handleCommand);
+      window.removeEventListener("portfolio:music-play-index", handlePlayIndex);
+    };
+  }, [tracks.length]);
 
   useEffect(() => {
     window.dispatchEvent(new CustomEvent("portfolio:music-status", { detail: { isPlaying } }));
@@ -50,18 +72,23 @@ export default function MusicSection() {
     // EXCLUSIVE TRIGGER: Only start music via Globe Interaction
     const attemptAutoplay = () => {
       if (audioRef.current) {
-        // Force the Police track to be the starting song
-        const policeTrack = initialTracks.find(t => t.title.includes("Every Breath You Take"));
-        const targetTrack = policeTrack || initialTracks[0];
+        // Force the Kanye West track to be the starting song
+        const kanyeTrack = initialTracks.find(t => t.title.includes("Praise God"));
+        const targetTrack = kanyeTrack || initialTracks[0];
 
         if (targetTrack) {
-          audioRef.current.src = targetTrack.url;
-          setCurrentTrackIndex(initialTracks.indexOf(targetTrack));
+          const index = initialTracks.indexOf(targetTrack);
+          if (currentTrackIndex !== index) {
+            audioRef.current.src = targetTrack.url;
+            setCurrentTrackIndex(index);
+          }
+          // Set start time to 0:17
+          audioRef.current.currentTime = 17;
         }
         
         audioRef.current.play().then(() => {
           setIsPlaying(true);
-          // We still remove the listener after first success to avoid music restarting on every touch
+          // Remove listener so it only triggers once per session
           window.removeEventListener("portfolio:start-music", attemptAutoplay);
         }).catch((err) => {
           console.warn("Audio activation failed:", err);

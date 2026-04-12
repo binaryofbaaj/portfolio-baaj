@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { terminalCommands } from "@/data/portfolio";
+import { terminalCommands, projects } from "@/data/portfolio";
 import { useTheme } from "next-themes";
 
 interface TerminalLine {
@@ -69,7 +69,7 @@ export default function Terminal({
     if (trimmed === "theme" || trimmed === "theme toggle") {
       const newTheme = theme === "dark" ? "light" : "dark";
       setTheme(newTheme);
-      const warning = newTheme === 'light' ? '\n⚠️ WARNING: Not getting the full immersive experience in this theme!!' : '';
+      const warning = newTheme === 'light' ? '\nEntering Vintage Mode...' : '\nEntering Cyber Mode...';
       newHistory.push({ type: "output", content: `Theme toggled to ${newTheme} mode.${warning}` });
       setHistory(newHistory);
       setCmdHistory([cmd, ...cmdHistory]);
@@ -80,7 +80,7 @@ export default function Terminal({
       const mode = trimmed.split(" ")[1];
       if (mode === "light" || mode === "dark") {
         setTheme(mode);
-        const warning = mode === 'light' ? '\n⚠️ WARNING: Not getting the full immersive experience in this theme!!' : '';
+        const warning = mode === 'light' ? '\nEntering Vintage Mode...' : '\nEntering Cyber Mode...';
         newHistory.push({ type: "output", content: `Theme switched to ${mode} mode.${warning}` });
       } else {
         newHistory.push({ type: "output", content: `Unknown theme. Usage: theme [light|dark|toggle]` });
@@ -115,6 +115,64 @@ export default function Terminal({
           .querySelector(navMap[trimmed])
           ?.scrollIntoView({ behavior: "smooth" });
       }, 300);
+      return;
+    }
+
+    if (trimmed.startsWith("projects ") && trimmed !== "projects") {
+      const parts = trimmed.split(" ");
+      const indexStr = parts[1];
+      const index = parseInt(indexStr, 10) - 1;
+      
+      if (!isNaN(index) && index >= 0 && index < projects.length) {
+        const p = projects[index];
+        newHistory.push({
+          type: "output",
+          content: "\n[ Project Details: " + p.title + " ]\n\nDescription: " + p.description + "\nTech Stack:  " + p.tech.join(", ") + "\nFeatures:    " + p.features.map(f => "\n  - " + f).join("") + "\n\nLinks:\n  GitHub: " + p.github + "\n  Live:   " + p.live
+        });
+      } else {
+        newHistory.push({ type: "output", content: "Project not found. Type 'projects' to list all." });
+      }
+      setHistory(newHistory);
+      setCmdHistory([cmd, ...cmdHistory]);
+      setHistoryIndex(-1);
+      setInput("");
+      return;
+    }
+
+    if (trimmed.startsWith("music ") && trimmed !== "music") {
+      const parts = trimmed.split(" ");
+      const action = parts[1];
+      if (action === "play") {
+        const numStr = parts[2];
+        if (numStr) {
+          const idx = parseInt(numStr, 10) - 1;
+          if (!isNaN(idx)) {
+            window.dispatchEvent(new CustomEvent("portfolio:music-play-index", { detail: { index: idx } }));
+            newHistory.push({ type: "output", content: `Playing track ${idx + 1}...` });
+          } else {
+            newHistory.push({ type: "output", content: "Invalid track number." });
+          }
+        } else {
+          window.dispatchEvent(new CustomEvent("portfolio:music-command", { detail: { command: "play" } }));
+          newHistory.push({ type: "output", content: "Music playback started." });
+        }
+      } else if (action === "pause") {
+        window.dispatchEvent(new CustomEvent("portfolio:music-command", { detail: { command: "pause" } }));
+        newHistory.push({ type: "output", content: "Music paused." });
+      } else if (action === "next") {
+        window.dispatchEvent(new CustomEvent("portfolio:music-command", { detail: { command: "next" } }));
+        newHistory.push({ type: "output", content: "Skipping to next track..." });
+      } else if (action === "prev") {
+        window.dispatchEvent(new CustomEvent("portfolio:music-command", { detail: { command: "prev" } }));
+        newHistory.push({ type: "output", content: "Returning to previous track..." });
+      } else {
+        newHistory.push({ type: "output", content: "Unknown music command. Usage: music [play <num>|pause|next|prev]" });
+      }
+      
+      setHistory(newHistory);
+      setCmdHistory([cmd, ...cmdHistory]);
+      setHistoryIndex(-1);
+      setInput("");
       return;
     }
 
