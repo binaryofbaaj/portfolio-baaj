@@ -13,6 +13,7 @@ export interface Project {
   github: string;
   live: string;
   color: string;
+  comingSoon?: boolean;
 }
 
 export interface Skill {
@@ -149,6 +150,37 @@ export const projects: Project[] = [
     live: "https://binaryofbaaj.github.io/graph-algorithm-visualizer/",
     color: "var(--accent-purple)",
   },
+  {
+    title: "Visually — Algorithm Visualizer",
+    description:
+      "An interactive algorithm visualization platform with step-by-step animations and source code in C++, Java, and Python.",
+    tech: ["HTML5", "CSS3", "Vanilla JavaScript", "Canvas API"],
+    features: [
+      "20 Algorithm Visualizations across 7 categories",
+      "Step-by-step animations with play/pause and speed control",
+      "Source code with syntax highlighting",
+      "Dark & Light themes with smooth transitions"
+    ],
+    github: "https://github.com/binaryofbaaj/Visually",
+    live: "https://binaryofbaaj.github.io/Visually/",
+    color: "var(--accent-orange)",
+  },
+  {
+    title: "Unify — Academic Operating System",
+    description:
+      "A comprehensive, modern Academic Operations System designed to bridge the gap between Students, Teachers, and Administration.",
+    tech: ["Next.js 15", "Tailwind CSS", "MongoDB", "NextAuth.js", "Shadcn UI"],
+    features: [
+      "Unified Dashboard and Assignment Tracking for students",
+      "Test Center, Grades Hub, and Announcement Management for teachers",
+      "Secure Server-Side Session Validation with Role-based JWTs",
+      "Shadow-routed System Administration with Bulk CSV Import"
+    ],
+    github: "https://github.com/binaryofbaaj/Unify.git",
+    live: "#",
+    color: "var(--accent-green)",
+    comingSoon: true,
+  },
 ];
 
 export const education: Education[] = [
@@ -263,6 +295,8 @@ export const terminalCommands: Record<string, string> = {
   projects: `[1] Standard Electricals - Generator Rental System
 [2] Retro 3D Portfolio   - Interactive Workspace
 [3] AlgoVisualizer       - Graph Visualizer
+[4] Visually             - Algorithm Visualizer
+[5] Unify                - Academic OS
 
 Type 'projects <number>' for details.`,
   experience: `┌─ AWS Cloud Computing Intern (2024) ─┐

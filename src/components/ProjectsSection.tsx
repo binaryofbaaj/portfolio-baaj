@@ -75,24 +75,55 @@ function ProjectCard({
             </h3>
           </div>
           <div className="flex gap-3">
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-md border border-[var(--border-base)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--text-secondary)] transition-all"
-              aria-label={`${project.title} GitHub`}
-            >
-              <FiGithub size={18} />
-            </a>
-            <a
-              href={project.live}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-md border border-[var(--border-base)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--text-secondary)] transition-all"
-              aria-label={`${project.title} Live Preview`}
-            >
-              <FiExternalLink size={18} />
-            </a>
+            {project.comingSoon ? (
+              <>
+                <div className="relative group/tooltip">
+                  <button
+                    disabled
+                    className="p-2 rounded-md border border-[var(--border-base)] text-[var(--text-tertiary)] cursor-not-allowed transition-all opacity-50"
+                    aria-label={`${project.title} GitHub`}
+                  >
+                    <FiGithub size={18} />
+                  </button>
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-[var(--bg-surface)] text-[var(--text-secondary)] text-[10px] font-mono rounded opacity-0 group-hover/tooltip:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-[var(--border-base)] z-10">
+                    Coming soon
+                  </div>
+                </div>
+                <div className="relative group/tooltip">
+                  <button
+                    disabled
+                    className="p-2 rounded-md border border-[var(--border-base)] text-[var(--text-tertiary)] cursor-not-allowed transition-all opacity-50"
+                    aria-label={`${project.title} Live Preview`}
+                  >
+                    <FiExternalLink size={18} />
+                  </button>
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-[var(--bg-surface)] text-[var(--text-secondary)] text-[10px] font-mono rounded opacity-0 group-hover/tooltip:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-[var(--border-base)] z-10">
+                    Coming soon
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-md border border-[var(--border-base)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--text-secondary)] transition-all"
+                  aria-label={`${project.title} GitHub`}
+                >
+                  <FiGithub size={18} />
+                </a>
+                <a
+                  href={project.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-md border border-[var(--border-base)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--text-secondary)] transition-all"
+                  aria-label={`${project.title} Live Preview`}
+                >
+                  <FiExternalLink size={18} />
+                </a>
+              </>
+            )}
           </div>
         </div>
 
