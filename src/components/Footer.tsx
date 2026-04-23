@@ -39,14 +39,14 @@ export default function Footer() {
             <div className="text-[var(--accent-green)] font-mono text-lg mb-3 font-bold tracking-wider">
               &gt; {personalInfo.name}<span className="cursor-blink">_</span>
             </div>
-            <p className="text-[var(--text-tertiary)] text-xs font-mono leading-relaxed mb-4">
+            <p className="text-[var(--text-muted)] text-xs font-mono leading-relaxed mb-4">
               Full Stack Developer crafting digital experiences with clean code and creative design.
             </p>
-            <div className="text-[10px] font-mono text-[var(--text-quaternary)] space-y-1">
+            <div className="text-[10px] font-mono text-[var(--text-secondary)] space-y-1">
               <div><span className="text-[var(--accent-green)]">$</span> echo $STACK</div>
-              <div className="pl-3 text-[var(--text-tertiary)]">Next.js • Three.js • TypeScript</div>
+              <div className="pl-3 text-[var(--text-muted)]">Next.js • Three.js • TypeScript</div>
               <div><span className="text-[var(--accent-green)]">$</span> uptime</div>
-              <div className="pl-3 text-[var(--text-tertiary)]">Always coding ☕</div>
+              <div className="pl-3 text-[var(--text-muted)]">Always coding ☕</div>
             </div>
           </motion.div>
 
@@ -57,7 +57,7 @@ export default function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <h4 className="text-xs font-mono text-[var(--text-tertiary)] uppercase tracking-[0.2em] mb-4">
+            <h4 className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-[0.2em] mb-4">
               // Quick Nav
             </h4>
             <div className="grid grid-cols-2 gap-2">
@@ -69,7 +69,7 @@ export default function Footer() {
                     e.preventDefault();
                     document.querySelector(link.href)?.scrollIntoView({ behavior: "smooth" });
                   }}
-                  className="text-[var(--text-secondary)] text-xs font-mono hover:text-[var(--accent-green)] transition-colors py-1 cursor-pointer"
+                  className="text-[var(--text-primary)] text-xs font-mono hover:text-[var(--accent-green)] transition-colors py-1 cursor-pointer"
                 >
                   <span className="text-[var(--accent-green)]/50">$</span> cd {link.label}
                 </a>
@@ -84,7 +84,7 @@ export default function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <h4 className="text-xs font-mono text-[var(--text-tertiary)] uppercase tracking-[0.2em] mb-4">
+            <h4 className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-[0.2em] mb-4">
               // Connect
             </h4>
             <div className="flex items-center gap-3 mb-6">
@@ -99,7 +99,7 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`w-9 h-9 flex items-center justify-center rounded-lg border border-[var(--border-base)] text-[var(--text-secondary)] transition-all duration-300 ${social.color}`}
+                  className={`w-9 h-9 flex items-center justify-center rounded-lg border border-[var(--border-base)] text-[var(--text-primary)] transition-all duration-300 ${social.color}`}
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   aria-label={social.label}
@@ -108,7 +108,7 @@ export default function Footer() {
                 </motion.a>
               ))}
             </div>
-            <div className="text-[10px] font-mono text-[var(--text-quaternary)]">
+            <div className="text-[10px] font-mono text-[var(--text-secondary)]">
               <span className="text-[var(--accent-cyan)]">&gt;</span> {personalInfo.email}
             </div>
           </motion.div>
@@ -121,7 +121,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="text-[10px] text-[var(--text-quaternary)] font-mono flex items-center gap-1.5">
+          <div className="text-[10px] text-[var(--text-secondary)] font-mono flex items-center gap-1.5">
             <span className="text-[var(--accent-green)]">&gt;</span>
             Designed & Built with <FiHeart className="text-[var(--accent-pink)] inline" size={10} /> by {personalInfo.name}
             <span className="mx-1 text-[var(--border-base)]">|</span>
@@ -130,11 +130,11 @@ export default function Footer() {
 
           <motion.button
             onClick={scrollToTop}
-            className="group flex items-center gap-2 text-[10px] font-mono text-[var(--text-quaternary)] hover:text-[var(--accent-green)] transition-colors cursor-pointer"
+            className="group flex items-center gap-2 text-xs font-mono text-[var(--text-secondary)] hover:text-[var(--accent-green)] transition-colors cursor-pointer"
             whileHover={{ y: -2 }}
           >
             <span>scroll_to_top</span>
-            <FiArrowUp size={12} className="group-hover:animate-bounce" />
+            <FiArrowUp size={14} className="group-hover:animate-bounce" />
           </motion.button>
         </div>
       </div>
